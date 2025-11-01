@@ -10,34 +10,111 @@
     @author McKilla Gorilla
 */
 
-import axios from 'axios'
-axios.defaults.withCredentials = true;
-const api = axios.create({
-    baseURL: 'http://localhost:4000/store',
-})
-
 // THESE ARE ALL THE REQUESTS WE`LL BE MAKING, ALL REQUESTS HAVE A
 // REQUEST METHOD (like get) AND PATH (like /top5list). SOME ALSO
 // REQUIRE AN id SO THAT THE SERVER KNOWS ON WHICH LIST TO DO ITS
 // WORK, AND SOME REQUIRE DATA, WHICH WE WE WILL FORMAT HERE, FOR WHEN
 // WE NEED TO PUT THINGS INTO THE DATABASE OR IF WE HAVE SOME
 // CUSTOM FILTERS FOR QUERIES
-export const createPlaylist = (newListName, newSongs, userEmail) => {
-    return api.post(`/playlist/`, {
-        // SPECIFY THE PAYLOAD
-        name: newListName,
-        songs: newSongs,
-        ownerEmail: userEmail
-    })
+
+export async function createPlaylist(newListName, newSongs, userEmail){
+    const url = "http://localhost:4000/store/playlist/";
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            "name" : newListName,
+            "songs" : newSongs,
+            "ownerEmail" : userEmail
+        })
+    });
+
+    if (!response.ok) {
+        let error = await response.json();
+        throw error;
+    }
+
+    return response;
 }
-export const deletePlaylistById = (id) => api.delete(`/playlist/${id}`)
-export const getPlaylistById = (id) => api.get(`/playlist/${id}`)
-export const getPlaylistPairs = () => api.get(`/playlistpairs/`)
-export const updatePlaylistById = (id, playlist) => {
-    return api.put(`/playlist/${id}`, {
-        // SPECIFY THE PAYLOAD
-        playlist : playlist
-    })
+
+export async function deletePlaylistById(id) {
+    const url = `http://localhost:4000/store/playlist/${id}`;
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        let error = await response.json();
+        throw error;
+    }
+
+    return response;
+}
+
+export async function getPlaylistById(id){
+    const url = `http://localhost:4000/store/playlist/${id}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        let error = await response.json();
+        throw error;
+    }
+
+    return response;
+}
+
+export async function getPlaylistPairs(){
+    const url = `http://localhost:4000/store/playlistpairs/`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include'
+    });
+
+    if (!response.ok) {
+        let error = await response.json();
+        throw error;
+    }
+
+    return response;
+}
+
+export async function updatePlaylistById(id, playlist) {
+    const url = `http://localhost:4000/store/playlist/${id}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            // SPECIFY THE PAYLOAD
+            playlist : playlist
+        })
+    });
+
+    if (!response.ok) {
+        let error = await response.json();
+        throw error;
+    }
+
+    return response;
 }
 
 const apis = {
