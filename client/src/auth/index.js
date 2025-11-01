@@ -75,23 +75,21 @@ function AuthContextProvider(props) {
     }
 
     auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
-        console.log("REGISTERING USER");
         try{   
-            const response = await authRequestSender.registerUser(firstName, lastName, email, password, passwordVerify);   
+            const response = await authRequestSender.registerUser(firstName, lastName, email, password, passwordVerify);  
             if (response.status === 200) {
+                const result = response.json(); 
                 console.log("Registered Sucessfully");
                 authReducer({
                     type: AuthActionType.REGISTER_USER,
                     payload: {
-                        user: response.data.user,
+                        user: result.user,
                         loggedIn: true,
                         errorMessage: null
                     }
                 })
                 history.push("/login");
-                console.log("NOW WE LOGIN");
                 auth.loginUser(email, password);
-                console.log("LOGGED IN");
             }
         } catch(error){
             authReducer({
@@ -99,7 +97,7 @@ function AuthContextProvider(props) {
                 payload: {
                     user: auth.user,
                     loggedIn: false,
-                    errorMessage: error.response.data.errorMessage
+                    errorMessage: error.errorMessage
                 }
             })
         }
@@ -109,10 +107,11 @@ function AuthContextProvider(props) {
         try{
             const response = await authRequestSender.loginUser(email, password);
             if (response.status === 200) {
+                const result = await response.json();
                 authReducer({
                     type: AuthActionType.LOGIN_USER,
                     payload: {
-                        user: response.data.user,
+                        user: result.user,
                         loggedIn: true,
                         errorMessage: null
                     }
@@ -120,12 +119,13 @@ function AuthContextProvider(props) {
                 history.push("/");
             }
         } catch(error){
+            // console.log(`ERRORHERE: ${error}`);
             authReducer({
                 type: AuthActionType.LOGIN_USER,
                 payload: {
                     user: auth.user,
                     loggedIn: false,
-                    errorMessage: error.response.data.errorMessage
+                    errorMessage: error.errorMessage
                 }
             })
         }
