@@ -119,7 +119,6 @@ function AuthContextProvider(props) {
                 history.push("/");
             }
         } catch(error){
-            // console.log(`ERRORHERE: ${error}`);
             authReducer({
                 type: AuthActionType.LOGIN_USER,
                 payload: {

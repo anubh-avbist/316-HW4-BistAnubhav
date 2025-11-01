@@ -83,7 +83,7 @@ export default function MUIEditSongModal() {
             <Typography 
                 sx={{color: "#702963", fontWeight:"bold", fontSize:"30px"}} 
                 id="modal-modal-year" variant="h6" component="h2">
-                Year: <input id="edit-song-modal-year-textfield" className='modal-textfield' type="text" defaultValue={year} onChange={handleUpdateYear} />
+                Year: <input id="edit-song-modal-year-textfield" className='modal-textfield' type="number" defaultValue={year} onChange={handleUpdateYear} />
             </Typography>
             <Typography 
                 sx={{color: "#702963", fontWeight:"bold", fontSize:"25px"}} 

@@ -17,7 +17,6 @@
 // WE NEED TO PUT THINGS INTO THE DATABASE OR IF WE HAVE SOME
 // CUSTOM FILTERS FOR QUERIES
 
-// export const getLoggedIn = () => api.get(`/loggedIn/`);
 export async function getLoggedIn() {
     const url = "http://localhost:4000/auth/loggedIn/";
     const response = await fetch(url);
@@ -31,12 +30,6 @@ export async function getLoggedIn() {
     return result;
 }
 
-// export const loginUser = (email, password) => {
-//     return api.post(`/login/`, {
-//         email : email,
-//         password : password
-//     })
-// }
 export async function loginUser(email, password) {
     const url = "http://localhost:4000/auth/login/";
 
@@ -61,7 +54,6 @@ export async function loginUser(email, password) {
     
 }
 
-// export const logoutUser = () => api.get(`/logout/`)
 export async function logoutUser() {
     const url = "http://localhost:4000/auth/logout/";
     const response = await fetch(url);
@@ -72,15 +64,6 @@ export async function logoutUser() {
     return response;   
 }
 
-// export const registerUser = (firstName, lastName, email, password, passwordVerify) => {
-//     return api.post(`/register/`, {
-//         firstName : firstName,
-//         lastName : lastName,
-//         email : email,
-//         password : password,
-//         passwordVerify : passwordVerify
-//     })
-// }
 export async function registerUser(firstName, lastName, email, password, passwordVerify) {
     const url = "http://localhost:4000/auth/register/";
 
